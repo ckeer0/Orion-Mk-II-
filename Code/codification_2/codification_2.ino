@@ -14,6 +14,8 @@ int red = 16;
 int blue = 14;
 int green = 15;
 
+unsigned long time;
+
 Adafruit_BMP280 bmp;
 
 
@@ -56,20 +58,16 @@ void logger(int IA) {
   // so you have to close this one before opening another.
   File dataFile = SD.open("datalog.txt", FILE_WRITE);
 
+  time = millis();
   mpu6050.update();
 
-  dataString = dataString + (String)(bmp.readAltitude(1013.25) - IA);
-  dataString += " ";
-  dataString = dataString + (String)mpu6050.getAccX();
-  dataString += " ";
-  dataString = dataString + (String)mpu6050.getAccY();
-  dataString += " ";
-  dataString = dataString + (String)mpu6050.getAccZ();
-  dataString += " ";
-  dataString = dataString + (String)mpu6050.getAngleX();
-  dataString += " ";
-  dataString = dataString + (String)mpu6050.getAngleY();
-  dataString += " ";
+  dataString = dataString + time + ",";
+  dataString = dataString + (String)(bmp.readAltitude(1013.25) - IA) + ",";
+  dataString = dataString + (String)mpu6050.getAccX() + ",";
+  dataString = dataString + (String)mpu6050.getAccY() + ",";
+  dataString = dataString + (String)mpu6050.getAccZ() + ",";
+  dataString = dataString + (String)mpu6050.getAngleX() + ",";
+  dataString = dataString + (String)mpu6050.getAngleY() + ",";
   dataString = dataString + (String)mpu6050.getAngleZ();
   
   // if the file is available, write to it:
